@@ -85,6 +85,9 @@ TEST(WalletZkeysTest, StoreAndLoadSaplingZkeys) {
     EXPECT_TRUE(wallet.HaveSaplingIncomingViewingKey(sk.DefaultAddress()));
     EXPECT_TRUE(wallet.HaveSaplingIncomingViewingKey(dpa));
 
+    // verify that AddSaplingIncomingViewingKey resets nTimeFirstKey, since there is no birthday info for watch-only keys
+    EXPECT_EQ(wallet.nTimeFirstKey, 1);
+
     // Load a third key into the wallet
     auto sk2 = m.Derive(1);
     ASSERT_TRUE(wallet.LoadSaplingZKey(sk2));
